@@ -1,5 +1,6 @@
 // tarayıcıda var olan veya boş todo dizisinin döndürülmesi
 var todos = JSON.parse(localStorage.getItem('todolist')) ? JSON.parse(localStorage.getItem('todolist')) : [];
+// var items = JSON.parse(localStorage.getItem('items')) ? JSON.parse(localStorage.getItem('items')) : [];
 
 // itemlerin içine yerleşeceği ul listesi
 var list = document.querySelector('#myList');
@@ -25,7 +26,10 @@ function getTodos() {
 
         span.onclick = function () {
             var li = this.parentElement;
-            li.style.display = 'none';
+            li.remove();
+            var index = todos.indexOf(todo);
+            todos.splice(index, 1);
+            localStorage.setItem('todolist', JSON.stringify(todos));
             li.classList.remove('checked');
         }
     })
@@ -67,7 +71,10 @@ function CreateItem(item) {
     // x tıklandığında elementin display özelliği none oluyor ve kayboluyor
     span.onclick = function () {
         var li = this.parentElement;
-        li.style.display = 'none';
+        li.remove();
+        var index = todos.indexOf(item);
+        todos.splice(index, 1);
+        localStorage.setItem('todolist', JSON.stringify(todos));
         li.classList.remove('checked');
     }
 }
@@ -84,6 +91,9 @@ document.querySelector('#deleteAll').onclick = function () {
 
     elements.forEach(function (item) {
         item.style.display = 'none';
+        var index = todos.indexOf(item);
+        todos.splice(index, 1);
+        localStorage.setItem('todolist', JSON.stringify(todos));
     })
 };
 
